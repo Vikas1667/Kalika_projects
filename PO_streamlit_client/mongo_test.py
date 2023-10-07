@@ -1,74 +1,69 @@
-
 import pymongo
 from pymongo.mongo_client import MongoClient
 # from pymongo.server_api import ServerApi
 import streamlit as st
 import pandas as pd
+import logging
 import json
-from urllib.parse import quote_plus
 
-# Create a new client and connect to the server
-samp_data_path='sample_data/28 JUNE 2023 CFS.xlsx'
+# with open('auth.json') as js:
+#     db=json.load(js)
+#     db_username=db["db_username"]
+#     db_pswd =db["db_pswd"]
 
-uri = ""
-# connect=False
+logging.basicConfig(filename='app_logger.log', encoding='utf-8', level=logging.DEBUG,filemode="w")
 
-@st.experimental_singleton()
+# Create a new client and connect to the  server
+uname=st.secrets["db_username"]
+pwd=st.secrets["db_pswd"]
+
+uri = "mongodb+srv://"+uname+":"+pwd+"@cluster0.pkysva5.mongodb.net/?retryWrites=true&w=majority"
+
+# @st.experimental_singleton()
 def init_connection():
     return MongoClient(uri,connect=False)
 
-
-client = init_connection()
 try:
-    client.admin.command('ping')
-    st.write("Pinged your deployment. You successfully connected to MongoDB!")
+    client = init_connection()
+    mng_db = client['kalika_data']
+    collection_name='kalika_po'
+    # collection_name='po_admin'
+
+    db_cm = mng_db[collection_name]
 except Exception as e:
-    print("Connection issue ", e)
-
-mng_db = client['kalika_data']
-collection_name='kalika_po'
-
-
-# admin_collection_name = 'po_admin'
-# db_cm = mng_db[admin_collection_name]
-db_cm = mng_db[collection_name]
-
-# db_cm.create_index("PO Number")
+    logging.error('Unable to connect to DB please update the ip address in DB')
 
 
 def find_mongo():
-
     records = db_cm.find()
     df=pd.DataFrame(list(records))
     return df
 
 def insert_data(df):
     try:
-        print("DB verified")
-        # df=pd.read_excel(path)
         data_json = json.loads(df.to_json(orient='records'))
-        print(data_json)
-        # db_cm.remove()
         db_cm.insert_many(data_json)
     except Exception as e:
-        print(e)
-
-
-# Send a ping to confirm a successful connection
-
+        logging.error(e)
+        st.write('Some Issue Please Try again or Contact to get Tracing details')
 
 def find_with_po(po_number):
     try:
-        # result = db_cm.find_one({"PO Number":po_number})
         db_cm = mng_db[collection_name]
         result = db_cm.find({'PO Number': po_number})
+        st.write('{} records found'.format(result.count()))
 
-        if result:
-            st.write("Results:",result)
+        if result.count()>0:
             return result
+
         else:
-            return "No document Found with PO number{}".format(po_number)
+            st.write("No document Found with PO number{}".format(po_number))
+            return None
+
+
     except Exception as e:
+        logging.error(e)
+        st.write('Check PO number or No data for PO you enter')
         return "Connection error due to{}".format(e)
 
 
@@ -76,7 +71,6 @@ def records_dataframe(po_status_data):
     df_list=[]
     if po_status_data:
         for doc in po_status_data:
-            # st.write('doc ',doc)
             df_list.append(doc)
         df = pd.DataFrame(df_list)
         return df

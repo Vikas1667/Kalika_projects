@@ -4,20 +4,16 @@ import pandas as pd
 # import streamlit_authenticator as stauth
 # import yaml
 # from yaml.loader import SafeLoader
-from PIL import Image
+
 print(os.getcwd())
 sys.path.append('../')
 import mongo_test
 from mongo_test import insert_data
-
-def add_logo(logo_path, width, height):
-    """Read and return a resized logo"""
-    logo = Image.open(logo_path)
-    modified_logo = logo.resize((width, height))
-    return modified_logo
+from utils import add_logo
 
 
-my_logo = add_logo(logo_path="./Kalika logo.png", width=300, height=60)
+
+my_logo = add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
 st.image(my_logo)
 
 

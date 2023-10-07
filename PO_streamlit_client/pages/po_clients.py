@@ -8,42 +8,13 @@ print(os.getcwd())
 # V:\ML_projects\github_projects\Purchase-Order-Application\PO_streamlit_client
 # from .PO_streamlit_client import mongo_test
 import mongo_test
-
 from PIL import Image
-
-def add_logo(logo_path, width, height):
-    """Read and return a resized logo"""
-    logo = Image.open(logo_path)
-    modified_logo = logo.resize((width, height))
-    return modified_logo
-
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
-        background-size: cover
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-    )
-
-# add_bg_from_local('tracker.jpg')
+import utils
 
 
-my_logo = add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
+my_logo = add_logo(logo_path=r"./imgs/Kalika logo.png", width=300, height=60)
 st.image(my_logo)
 st.title("PO TRACKER")
-
-
-
-
-
-
 
 PO = st.text_input("Enter your PO Number"," ")
 Item = st.text_input("Enter your item "," ")
