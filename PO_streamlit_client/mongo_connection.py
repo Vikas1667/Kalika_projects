@@ -6,12 +6,8 @@ import pandas as pd
 import logging
 import json
 
-# with open('auth.json') as js:
-#     db=json.load(js)
-#     db_username=db["db_username"]
-#     db_pswd =db["db_pswd"]
 
-logging.basicConfig(filename='app_logger.log', encoding='utf-8', level=logging.DEBUG,filemode="w")
+logging.basicConfig(filename='logs/app_logger.log', encoding='utf-8', level=logging.DEBUG, filemode="w")
 
 # Create a new client and connect to the  server
 uname=st.secrets["db_username"]

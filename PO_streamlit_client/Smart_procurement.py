@@ -7,47 +7,44 @@ import altair as alt
 import base64
 import matplotlib.pyplot as pltt
 print(os.getcwd())
-# V:\ML_projects\github_projects\Purchase-Order-Application\PO_streamlit_client
-import mongo_test
+import mongo_connection
+import altair as alt
+import matplotlib.pyplot as plt
 
-from transformers import pipeline
+from utils import utils
+from utils import visualize_po_db
 
-from PIL import Image
+my_logo = utils.add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
+st.sidebar.image(my_logo)
+# st.image(my_logo)
 
-def add_logo(logo_path, width, height):
-    """Read and return a resized logo"""
-    logo = Image.open(logo_path)
-    modified_logo = logo.resize((width, height))
-    return modified_logo
-
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
-        background-size: cover
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-    )
-
-my_logo = add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
-st.image(my_logo)
-st.title("SMART Procurement")
+st.title("Kalika SMART Procurement")
 
 
-tab1, tab2 = st.tabs(["Buyer Analysis", "Generate item description"])
+tab1, tab2 = st.tabs(["Buyer Analysis", "Generate smart item description"])
+df=visualize_po_db.mongo_records_poller()
+
+with tab1:
+    # st.table(df.head(5))
+    chunk_df=df[:20]
+
+    item_status_df=chunk_df[['Item Description','Quantity Ordered','Quantity Received','PENDING']]
+    po_status_df=chunk_df[['PO Number','Quantity Ordered','Quantity Received','PENDING']]
+
+    item_status_df['Item Description']=item_status_df['Item Description'].apply(lambda x:' '.join(x.split()[:3]))
+    ##
+
+
+    item_status_df=item_status_df.set_index('Item Description')
+    po_status_df = po_status_df.set_index('PO Number')
+    po_status_df=po_status_df.groupby(['PO Number']).sum()
+    item_status_df= item_status_df.groupby(['Item Description']).sum()
 
 
 
+    st.pyplot(po_status_df.plot.barh(stacked=True).figure)
+    st.pyplot(item_status_df.plot.barh(stacked=True,).figure)
+    # figsize=(20, 25)
 with tab2:
-    generator = pipeline('text-generation', model = 'gpt2')
-    text_inp=st.text_input('Enter the text')
-    if text_inp:
-        text_out=generator(text_inp, max_length = 200, num_return_sequences=3)
-        for i in text_out:
-            st.write(i)
+    st.write('Model for creating Item description')
+

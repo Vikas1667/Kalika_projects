@@ -9,19 +9,16 @@ from PIL import Image
 import time
 # print(os.getcwd())
 # sys.path.append('../')
-import mongo_test
-from mongo_test import insert_data,update_records,records_dataframe
+import mongo_connection
+from mongo_connection import insert_data,update_records,records_dataframe
+from utils import utils
+
 # update_columns
 
 val = ['Quantity Shipped', 'Material Status', "Transport details "]
 
-def add_logo(logo_path, width, height):
-    """Read and return a resized logo"""
-    logo = Image.open(logo_path)
-    modified_logo = logo.resize((width, height))
-    return modified_logo
 
-my_logo = add_logo(r"./imgs/Kalika logo.png", width=300, height=60)
+my_logo = utils.add_logo(r"./imgs/Kalika logo.png", width=300, height=60)
 st.image(my_logo)
 
 st.header(':blue[Insert] or :orange[Update] PO Data with _ease_ :sunglasses:')
@@ -63,9 +60,9 @@ def insert_po_details(po_no):
 
 def update_records(po):
     if po:
-        po_status_data = mongo_test.find_with_po(po)
+        po_status_data = mongo_connection.find_with_po(po)
         if po_status_data:
-            df = mongo_test.records_dataframe(po_status_data)
+            df = mongo_connection.records_dataframe(po_status_data)
             st.write('Update the values')
 
             item_details = ['Supplier Item', "Item No", "Due Date"]
@@ -121,7 +118,7 @@ if __name__ == '__main__':
 
     with cols2:
         rec_exist = st.button("check if po records exist")
-        po_status_data = mongo_test.find_with_po(po_no)
+        po_status_data = mongo_connection.find_with_po(po_no)
         df=records_dataframe(po_status_data)
         if len(df)>0:
             st.write(df)
@@ -137,15 +134,15 @@ if __name__ == '__main__':
 
         if df is not None:
 
-            r=mongo_test.unique_records(df)
+            r=mongo_connection.unique_records(df)
             st.write('Inserting all uniques values')
             if len(r)>0:
                 st.write('Inserting all uniques values')
-                mongo_test.insert_data(r)
+                mongo_connection.insert_data(r)
 
             else:
                 st.write('All Duplicate Records found..')
-                # mongo_test.insert_data(df)
+                # mongo_connection.insert_data(df)
 
 
             # # st.write('')

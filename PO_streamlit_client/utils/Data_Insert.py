@@ -7,13 +7,13 @@ import pandas as pd
 
 print(os.getcwd())
 sys.path.append('../')
-import mongo_test
-from mongo_test import insert_data
-from utils import add_logo
+import mongo_connection
+from mongo_connection import insert_data
+# from utils import add_logo
+from utils import utils
 
 
-
-my_logo = add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
+my_logo = utils.add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
 st.image(my_logo)
 
 
@@ -41,7 +41,7 @@ def insert_po_details():
     if st.button("check if po records exist"):
         st.write(po_no)
         po_df['po_no']=po_no
-        po_status_data = mongo_test.find_with_po(po_no)
+        po_status_data = mongo_connection.find_with_po(po_no)
 
         if po_status_data:
             po_data=[i for i in po_status_data]
@@ -75,15 +75,15 @@ if __name__ == '__main__':
 
         if df is not None:
             st.write('Data Checks performing for data')
-            r=mongo_test.unique_records(df)
+            r=mongo_connection.unique_records(df)
 
             if len(r)>0:
                 st.write('Inserting all uniques values')
-                mongo_test.insert_data(r)
+                mongo_connection.insert_data(r)
             else:
                 st.write("All records duplicate")
                 st.write('Inserting all values')
-                # mongo_test.insert_data(df)
+                # mongo_connection.insert_data(df)
 
 
     po_b = st.button('Insert PO details')

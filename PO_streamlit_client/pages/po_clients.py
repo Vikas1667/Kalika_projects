@@ -6,13 +6,14 @@ import base64
 import matplotlib.pyplot as pltt
 print(os.getcwd())
 # V:\ML_projects\github_projects\Purchase-Order-Application\PO_streamlit_client
-# from .PO_streamlit_client import mongo_test
-import mongo_test
+# from .PO_streamlit_client import mongo_connection
+import mongo_connection
 from PIL import Image
-import utils
+
+from utils import utils
 
 
-my_logo = add_logo(logo_path=r"./imgs/Kalika logo.png", width=300, height=60)
+my_logo = utils.add_logo(logo_path=r"./imgs/Kalika logo.png", width=300, height=60)
 st.image(my_logo)
 st.title("PO TRACKER")
 
@@ -29,10 +30,10 @@ if PO:
 
     if st.button("Track"):
         st.write("PO_DB connect inprogress")
-        po_status_data = mongo_test.find_with_po(PO)
+        po_status_data = mongo_connection.find_with_po(PO)
         st.write(po_status_data)
 
-        df=mongo_test.records_dataframe(po_status_data)
+        df=mongo_connection.records_dataframe(po_status_data)
 
         if len(df)>0:
             st.table(df)

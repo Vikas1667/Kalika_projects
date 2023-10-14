@@ -10,8 +10,8 @@ import random
 from PIL import Image
 print(os.getcwd())
 sys.path.append('../')
-import mongo_test
-from mongo_test import insert_data,update_records
+import mongo_connection
+from mongo_connection import insert_data,update_records
 from utils import add_logo
 
 
@@ -33,11 +33,11 @@ if po_update or st.session_state.uploadbtn_state:
     updated_df=pd.DataFrame()
     PO = st.text_input("Enter your PO Number to Search", "")
     if PO:
-        po_status_data = mongo_test.find_with_po(PO)
+        po_status_data = mongo_connection.find_with_po(PO)
 
         if po_status_data:
             st.write(po_status_data)
-            df = mongo_test.records_dataframe(po_status_data)
+            df = mongo_connection.records_dataframe(po_status_data)
             st.write('Update the values')
             val =['Quantity Shipped', 'Material Status', "Transport details "]
             item_details=['Supplier Item',"Item No","Due Date"]
