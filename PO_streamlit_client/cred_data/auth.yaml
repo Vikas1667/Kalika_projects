@@ -1,17 +1,1 @@
-credentials:
-  usernames:
-    vishal:
-      email: kalikaenterprises@gmail.com
-      name: Vishal Kumbharkar
-      password: Kalika@1954 # To be replaced with hashed password
-    vikas:
-      email: kalisoft308@gmail.com
-      name: Vikas K
-      password: AImonk@1992 # To be replaced with hashed password
-cookie:
-  expiry_days: 30
-  key: random_signature_key # Must be string
-  name: random_cookie_name
-preauthorized:
-  emails:
-  - kalikaenterprises@gmail.com
+
