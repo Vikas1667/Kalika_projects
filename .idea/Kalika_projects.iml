@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/PO_streamlit_client" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/PO_streamlit_client/.streamlit" />
+      <excludeFolder url="file://$MODULE_DIR$/PO_streamlit_client/data" />
+      <excludeFolder url="file://$MODULE_DIR$/PO_streamlit_client/logs" />
       <excludeFolder url="file://$MODULE_DIR$/notebooks/.ipynb_checkpoints" />
     </content>
     <orderEntry type="inheritedJdk" />
