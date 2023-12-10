@@ -26,3 +26,14 @@ https://towardsdatascience.com/building-a-dashboard-in-under-5-minutes-with-stre
 
 https://medium.com/@max.lutz./how-to-build-a-data-visualization-page-with-streamlit-4ca4999eba64
 https://github.com/max-lutz/articles_code/blob/main/data%20visualization%20streamlit/app.py
+
+## Gmail
+https://medium.com/@hemanthponnada23/gmail-data-analysis-using-python-184cc4a8f35b
+
+https://github.com/andreiaugustin/gmail_extractor/blob/master/gmail_extractor.py
+
+https://medium.com/analytics-vidhya/how-to-extract-emails-and-attachments-from-gmail-with-python-f694f297818b
+
+https://www.geeksforgeeks.org/python-fetch-your-gmail-emails-from-a-particular-user/
+
+https://medium.com/@dsharma15/accessing-and-filtering-emails-using-python-1a7b5cf31c6f
