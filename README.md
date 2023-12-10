@@ -8,8 +8,8 @@ conda env create -f environment.yml
 streamlit run po_clients.py
 
 cwd
-# V:\ML_projects\github_projects\Purchase-Order-Application\PO_streamlit_client
-
+# V:/ML_projects/github_projects/Purchase-Order-Application/PO_streamlit_client
+/
 
 ## Mongo DB
 Access required to manage and perform read write operation
@@ -37,3 +37,5 @@ https://medium.com/analytics-vidhya/how-to-extract-emails-and-attachments-from-g
 https://www.geeksforgeeks.org/python-fetch-your-gmail-emails-from-a-particular-user/
 
 https://medium.com/@dsharma15/accessing-and-filtering-emails-using-python-1a7b5cf31c6f
+
+D:/ML_Project/Kalika_projects/PO_streamlit_client/
