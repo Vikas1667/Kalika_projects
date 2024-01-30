@@ -1,3 +1,2 @@
-./cred_data/
-data/
+/cred_data/*
 .streamlit/
