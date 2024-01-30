@@ -18,21 +18,23 @@ from utils import utils
 from utils import visualize_po_db
 from itertools import chain
 # from PO_streamlit_client.cred_data import gmail.cred
-with open('./cred_data/gmail_pred.yml') as f:
-     cred = f.read()
 
+# with open('.gmail_pred.yml') as f:
+#      cred = f.read()
+#
 my_logo = utils.add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
 st.sidebar.image(my_logo)
 
 st.title("Kalika SMART Email Poller")
 
-my_credentials = yaml.load(cred, Loader = yaml.FullLoader)
+# my_credentials = yaml.load(cred, Loader = yaml.FullLoader)
 uid_max = 0
 
+
 class Email_extractor:
-    def __init__(self, my_credentials):
-        self.user = my_credentials["username"]
-        self.password = my_credentials["password"]
+    def __init__(self):
+        self.user = st.secrets["gmail_uname"]
+        self.password = st.secrets["gmail_pwd"]
         self.data = []
         self.destFolder = './data/pdf_data/'
         self.destFolder2 = './data/json_data/'
