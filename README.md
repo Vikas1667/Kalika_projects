@@ -7,9 +7,6 @@ It also contains code for PO report.
 conda env create -f environment.yml
 streamlit run po_clients.py
 
-cwd
-# V:/ML_projects/github_projects/Purchase-Order-Application/PO_streamlit_client
-/
 
 ## Mongo DB
 Access required to manage and perform read write operation
