@@ -27,20 +27,22 @@ if __name__ == "__main__":
     if "past" not in st.session_state:
         st.session_state['past']=[]
 
-    train_df=pd.read_excel(r"../sample_data/28 JUNE 2023 CFS.xlsx")
-    llm=OpenAI(api_token="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")
+    openai_key=st.text_input("Enter the openai_key")
+    if openai_key:
+        train_df=pd.read_excel(r"../sample_data/28 JUNE 2023 CFS.xlsx")
+        llm=OpenAI(api_token=openai_key)
 
-    prompt:str=st.chat_input("Enter the po_no for status")
-    if prompt:
-        st.session_state[MESSAGES].append(Message(actor=USER,payload=prompt))
-        st.chat_message(USER).write(prompt)
-        df=SmartDataframe(train_df,config={"llm":llm})
-        response:str=f"Your PO number as response{prompt}"
+        prompt:str=st.chat_input("Enter the po_no for status")
+        if prompt:
+            st.session_state[MESSAGES].append(Message(actor=USER,payload=prompt))
+            st.chat_message(USER).write(prompt)
+            df=SmartDataframe(train_df,config={"llm":llm})
+            response:str=f"Your PO number as response{prompt}"
 
-        response=df.chat(prompt)
-        if response:
+            response=df.chat(prompt)
+            if response:
 
-            st.session_state[MESSAGES].append(Message(actor=ASSISTANT,payload=response))
-            st.chat_message(ASSISTANT).write(response)
-        else:
-            st.write("rephrase the query")
+                st.session_state[MESSAGES].append(Message(actor=ASSISTANT,payload=response))
+                st.chat_message(ASSISTANT).write(response)
+            else:
+                st.write("rephrase the query")
