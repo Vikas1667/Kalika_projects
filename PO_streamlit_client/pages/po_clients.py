@@ -13,7 +13,7 @@ from PIL import Image
 from utils import utils
 
 
-my_logo = utils.add_logo(logo_path=r"./imgs/Kalika logo.png", width=300, height=60)
+my_logo = utils.add_logo(logo_path=r"imgs/Kalikalogo.png", width=300, height=60)
 st.image(my_logo)
 st.title("PO TRACKER")
 

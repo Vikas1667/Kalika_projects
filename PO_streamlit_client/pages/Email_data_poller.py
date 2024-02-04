@@ -22,7 +22,7 @@ from itertools import chain
 # with open('.gmail_pred.yml') as f:
 #      cred = f.read()
 #
-my_logo = utils.add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
+my_logo = utils.add_logo(logo_path="imgs/Kalikalogo.png", width=300, height=60)
 st.sidebar.image(my_logo)
 
 st.title("Kalika SMART Email Poller")

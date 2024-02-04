@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from utils import utils
 from utils import visualize_po_db
 
-my_logo = utils.add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
+my_logo = utils.add_logo(logo_path="imgs/Kalikalogo.png", width=300, height=60)
 st.sidebar.image(my_logo)
 # st.image(my_logo)
 

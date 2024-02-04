@@ -18,7 +18,7 @@ from utils import utils
 val = ['Quantity Shipped', 'Material Status', "Transport details "]
 
 
-my_logo = utils.add_logo(r"./imgs/Kalika logo.png", width=300, height=60)
+my_logo = utils.add_logo(r"./imgs/Kalikalogo.png", width=300, height=60)
 st.image(my_logo)
 
 st.header(':blue[Insert] or :orange[Update] PO Data with _ease_ :sunglasses:')

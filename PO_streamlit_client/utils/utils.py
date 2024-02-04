@@ -1,6 +1,7 @@
 import altair as alt
 import base64
 from PIL import Image
+import streamlit as st
 
 def add_logo(logo_path, width, height):
     """Read and return a resized logo"""

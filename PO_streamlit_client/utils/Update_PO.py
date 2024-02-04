@@ -15,7 +15,7 @@ from mongo_connection import insert_data,update_records
 from utils import add_logo
 
 
-my_logo = add_logo(logo_path="imgs/Kalika logo.png", width=300, height=60)
+my_logo = add_logo(logo_path="imgs/Kalikalogo.png", width=300, height=60)
 st.image(my_logo)
 
 
