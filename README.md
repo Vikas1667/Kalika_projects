@@ -15,4 +15,6 @@ conda env create -f environment.yml
 streamlit run po_clients.py
 
 
-##
+Issues
+https://github.com/conda/conda/issues/9621
+

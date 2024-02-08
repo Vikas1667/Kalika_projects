@@ -65,7 +65,7 @@ class Email_extractor:
 
         uids = result_bytes[0].split()
         uids = [id.decode("utf-8") for id in uids]
-        print("UID", uids[2], len(uids))
+        # print("UID", uids[2], len(uids))
         uids = uids[-1:-201:-1]
 
         print("Latest UID", uids[2], len(uids))
@@ -89,8 +89,8 @@ class Email_extractor:
             except Exception as e:
                 print(e)
                 pass
-
-        date_list = pd.to_datetime(date_list,format="mixed")
+        st.write(date_list[0])
+        date_list = pd.to_datetime(date_list)
         date_list1 = []
         for item in date_list:
             date_list1.append(item.isoformat(' ')[:-6])
@@ -104,7 +104,7 @@ class Email_extractor:
         subject_text = []
         if search:
             result, numbers = self.mail.uid('search', None, "ALL")
-            print(len(numbers))
+            st.write(len(numbers))
             df = self.get_email(numbers)
             return df
 
@@ -251,7 +251,7 @@ class Email_extractor:
 
 
 if __name__ == "__main__":
-    email = Email_extractor(my_credentials)
+    email = Email_extractor()
     email.attempt_login()
     email.select_mail()
 
