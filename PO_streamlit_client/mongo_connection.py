@@ -31,19 +31,36 @@ except Exception as e:
 
 
 def find_mongo():
+    """
+    find the records in collection
+    """
     records = db_cm.find()
     df=pd.DataFrame(list(records))
     return df
 
 def insert_data(df):
+    '''
+    Insert many records from dataframe to mongodb collection
+    @param df: po_dataframe
+    @return: 0
+
+    '''
     try:
         data_json = json.loads(df.to_json(orient='records'))
         db_cm.insert_many(data_json)
+        # db_cm.insert_many(data_json)
     except Exception as e:
         logging.error(e)
-        st.write('Some Issue Please Try again or Contact to get Tracing details')
+
+        st.write('Some Issue Please Try again or Contact to get Tracing details',e)
 
 def find_with_po(po_number):
+    """
+    Find the records from collection using po_number
+    improvement: collection name is default can be use dynamic
+    @param po_number: po_number
+    @return: records matched with po_number
+    """
     try:
         db_cm = mng_db[collection_name]
         result = db_cm.find({'PO Number': po_number})
@@ -64,7 +81,13 @@ def find_with_po(po_number):
 
 
 def records_dataframe(po_status_data):
+    '''
+    Records found for update with po_number
+    @param po_status_data: records are found in collection
+    @return: dataframe
+    '''
     df_list=[]
+
     if po_status_data:
         for doc in po_status_data:
             df_list.append(doc)
@@ -72,7 +95,12 @@ def records_dataframe(po_status_data):
         return df
 
 def unique_records(df,key='PO'):
+    '''
 
+    @param df: unique records
+    @param key: key or index to be search for unique records
+    @return: unique records
+    '''
     po_list=df['PO Number'].tolist()
     r=db_cm.find()
     po_df=pd.DataFrame(list(r))
@@ -103,3 +131,9 @@ def update_records(query,updated_val,po):
 
 
 ### new
+def upsert_records():
+    '''
+
+    @return:
+    '''
+    pass

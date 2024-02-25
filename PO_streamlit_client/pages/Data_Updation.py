@@ -7,8 +7,8 @@ import pandas as pd
 
 from PIL import Image
 import time
-# print(os.getcwd())
-# sys.path.append('../')
+# st.write(os.getcwd())
+sys.path.append('../')
 import mongo_connection
 from mongo_connection import insert_data,update_records,records_dataframe
 from utils import utils
@@ -40,6 +40,7 @@ def file_upload():
 
 
 def insert_po_details(po_no):
+
     po_df=pd.DataFrame()
     st.write("PO records not exists proceed")
     po_df['po_no'] = st.text_input("PO Number:", po_no)
@@ -59,6 +60,16 @@ def insert_po_details(po_no):
 
 
 def update_records(po):
+    '''
+       upload the po_file if duplicate po_no exist no of records are displayed and if not present inserted
+       ## scenarios
+       1. if some records/rows/po_number are duplicate
+       -> uniques records are inserted with matching/find and then removing matched records(done)
+           i) po_matched but items/products can be different and removed directly with check of po_only
+           --> if matched other fields can be check(inprogress)
+
+       '''
+
     if po:
         po_status_data = mongo_connection.find_with_po(po)
         if po_status_data:
@@ -120,7 +131,7 @@ if __name__ == '__main__':
         rec_exist = st.button("check if po records exist")
         po_status_data = mongo_connection.find_with_po(po_no)
         df=records_dataframe(po_status_data)
-        if len(df)>0:
+        if df is not None:
             st.write(df)
 
 
@@ -133,12 +144,11 @@ if __name__ == '__main__':
         df = file_upload()
 
         if df is not None:
-
-            r=mongo_connection.unique_records(df)
+            unq_rec=mongo_connection.unique_records(df)
             st.write('Inserting all uniques values')
-            if len(r)>0:
+            if len(unq_rec)>0:
                 st.write('Inserting all uniques values')
-                mongo_connection.insert_data(r)
+                mongo_connection.insert_data(unq_rec)
 
             else:
                 st.write('All Duplicate Records found..')
@@ -146,20 +156,20 @@ if __name__ == '__main__':
 
 
             # # st.write('')
-            # st.subheader('Enter the records manually _or Update_ :blue[colors] and emojis :sunglasses:')
-            #
-            #
-            # po_data=[i for i in po_status_data]
-            # df=pd.DataFrame(po_data)
-            #
-            # if len(df)>0:
-            #     # st.table(df)
-            #     with col1:
-            #         upload_button=st.button('Update Current Status for PO')
-            #         if upload_button:
-            #             update_records(po_no)
-            #
-            #     with col2:
-            #         if st.button('Insert the data manually'):
-            #            po=insert_po_details(po_no)
-            #
+            st.subheader('Enter the records manually _or Update_ :blue[colors] and emojis :sunglasses:')
+
+
+            po_data=[i for i in po_status_data]
+            df=pd.DataFrame(po_data)
+
+            if len(df)>0:
+                # st.table(df)
+                with col1:
+                    upload_button=st.button('Update Current Status for PO')
+                    if upload_button:
+                        update_records(po_no)
+
+                with col2:
+                    if st.button('Insert the data manually'):
+                       po=insert_po_details(po_no)
+

@@ -113,7 +113,7 @@ if __name__ == "__main__":
         if prompt is not None:
             # prompt=f"What is the Quantity Ordered for po number {prompt}"
             # prompt=f"What is the Material Status for po number {prompt}"
-            prompt=f"Fetch all details for po number {prompt}"
+            # prompt=f"Fetch all details for po number {prompt}"
 
             st.session_state[MESSAGES].append(Message(actor=USER, payload=prompt))
             response=tapas_model(data=df,prompt=prompt)
