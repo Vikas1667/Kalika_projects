@@ -131,9 +131,15 @@ def update_records(query,updated_val,po):
 
 
 ### new
-def upsert_records():
+def upsert_records(df):
     '''
 
     @return:
     '''
-    pass
+    try:
+        data_json = json.loads(df.to_json(orient='records'))
+        db_cm.update_many(data_json,upsert=True)
+        # db_cm.insert_many(data_json)
+    except Exception as e:
+        logging.error(e)
+

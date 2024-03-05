@@ -2,7 +2,7 @@ from langchain.document_loaders import CSVLoader
 # from transformers import GPT3Tokenizer, GPT3ChatLM
 import pandas as pd
 import streamlit as st
-from mongo_connection import insert_data
+from mongo_connection import upsert_records
 uploaded_file = st.file_uploader('Upload a file')
 # tokenizer = GPT3Tokenizer.from_pretrained("gpt3.5-turbo")
 # model = GPT3ChatLM.from_pretrained("gpt3.5-turbo")
@@ -30,5 +30,6 @@ if uploaded_file is not None:
     po_df=st.data_editor(df,num_rows="dynamic")
 
     if po_df is not None:
-        insert_data(po_df)
+        if st.button("Insert records"):
+            upsert_records(po_df)
 
