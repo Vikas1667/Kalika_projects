@@ -29,6 +29,8 @@ try:
 except Exception as e:
     logging.error('Unable to connect to DB please update the ip address in DB')
 
+def delete_all():
+    db_cm.delete_many({})
 
 def find_mongo():
     """
@@ -101,6 +103,7 @@ def unique_records(df,key='PO'):
     @param key: key or index to be search for unique records
     @return: unique records
     '''
+
     po_list=df['PO Number'].tolist()
     r=db_cm.find()
     po_df=pd.DataFrame(list(r))
