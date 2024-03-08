@@ -21,13 +21,19 @@ def init_connection():
 
 try:
     client = init_connection()
+    st.write("Mongo connection successfully")
     mng_db = client['kalika_data']
     collection_name='kalika_po'
+
     # collection_name='po_admin'
 
     db_cm = mng_db[collection_name]
+    # db_cm.create_index("PO Number",unique=True)
+
+
 except Exception as e:
     logging.error('Unable to connect to DB please update the ip address in DB')
+    st.write("error while initilizing connection",e)
 
 def delete_all():
     db_cm.delete_many({})
@@ -49,8 +55,8 @@ def insert_data(df):
     '''
     try:
         data_json = json.loads(df.to_json(orient='records'))
+        # db_cm.insert_many(data_json,{"ordered" : False})
         db_cm.insert_many(data_json)
-        # db_cm.insert_many(data_json)
     except Exception as e:
         logging.error(e)
 
@@ -136,13 +142,15 @@ def update_records(query,updated_val,po):
 ### new
 def upsert_records(df):
     '''
-
+    insert many without duplicates
+    1) create index and
     @return:
     '''
     try:
         data_json = json.loads(df.to_json(orient='records'))
-        db_cm.update_many(data_json,upsert=True)
+        st.write(data_json)
+        # db_cm.update_many(data_json,upsert=True)
         # db_cm.insert_many(data_json)
     except Exception as e:
         logging.error(e)
-
+        st.write("error",e)

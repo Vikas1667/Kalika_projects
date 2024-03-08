@@ -17,8 +17,8 @@ my_logo = utils.add_logo(logo_path=r"imgs/Kalikalogo.png", width=300, height=60)
 st.image(my_logo)
 st.title("PO TRACKER")
 
-PO = st.text_input("Enter your PO Number"," ")
-Item = st.text_input("Enter your item "," ")
+PO = st.text_input("Enter your PO Number","")
+Item = st.text_input("Enter your item ","")
 df_list=[]
 
 
