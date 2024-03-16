@@ -94,7 +94,7 @@ def records_dataframe(po_status_data):
     @param po_status_data: records are found in collection
     @return: dataframe
     '''
-    df_list=[]
+    df_list = []
 
     if po_status_data:
         for doc in po_status_data:
@@ -133,6 +133,9 @@ def update_records(query,updated_val,po):
         df = records_dataframe(po_status_data)
         st.write('Updated the values', df)
 
+
+ 
+
         return "Update successful"
 
     except Exception as e:
@@ -146,11 +149,16 @@ def upsert_records(df):
     1) create index and
     @return:
     '''
-    try:
-        data_json = json.loads(df.to_json(orient='records'))
-        st.write(data_json)
+    #try:
+    st.write(df)
+    #if df is not None:
+    #json_df=df.to_json()
+    #data_json = json.loads(json_df)
+    #st.write(data_json)
         # db_cm.update_many(data_json,upsert=True)
         # db_cm.insert_many(data_json)
-    except Exception as e:
-        logging.error(e)
-        st.write("error",e)
+    #except Exception as e:
+        #logging.error(e)
+        #st.write("error",e)
+
+

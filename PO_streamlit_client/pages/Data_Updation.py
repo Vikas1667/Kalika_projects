@@ -162,14 +162,17 @@ if __name__ == '__main__':
             po_data=[i for i in po_status_data]
             df=pd.DataFrame(po_data)
 
-            if len(df)>0:
-                # st.table(df)
-                with col1:
-                    upload_button=st.button('Update Current Status for PO')
-                    if upload_button:
-                        update_records(po_no)
+    if len(df) > 0:
+        col1, col2 = st.columns(2)  # Split the screen into two columns
+        
+        with col1:
+            upload_button = st.button('Update Current Status for PO')
+            if upload_button:
+                update_records(po_no)
 
-                with col2:
-                    if st.button('Insert the data manually'):
-                       po=insert_po_details(po_no)
+        with col2:
+            insert_button = st.button('Insert the data manually')
+            if insert_button:
+                po = insert_po_details(po_no)
+
 
