@@ -36,7 +36,7 @@ if PO:
         df=mongo_connection.records_dataframe(po_status_data)
 
         if df is not None:
-            st.table(df)
+            st.table(df)  
             # st.write(df['Material Status'])
         # if po_status_data:
         #     for k,v in po_status_data():
